@@ -26,7 +26,7 @@ const Form = ({data, setData, setStatus}) => {
 
   const KeyDown = (e) => {
     if (e.key === 'Enter') {
-      addTodo(text); // Вызываем функцию добавления задачи
+      addTodo(text);
     }
   };
   return (
