@@ -1,8 +1,14 @@
 import { useState } from "react";
 
-const Form = ({data, setData}) => {
+const Form = ({data, setData, setStatus}) => {
   const [text, setText] = useState('');
   const addTodo = (text) =>{
+  
+  if (text.trim() === "") {
+    alert("The name cannot be empty!"); 
+    return; 
+  }
+
     setData([
       {
         text,
@@ -15,8 +21,14 @@ const Form = ({data, setData}) => {
       ...data
     ]);
     setText('');
+    setStatus('all');
   }
 
+  const KeyDown = (e) => {
+    if (e.key === 'Enter') {
+      addTodo(text); // Вызываем функцию добавления задачи
+    }
+  };
   return (
     <div className="form">
       <button onClick={()=>{
@@ -28,6 +40,7 @@ const Form = ({data, setData}) => {
         setText(e.target.value)
       }}
       value={text}
+      onKeyDown={KeyDown}
       />
     </div>
   );

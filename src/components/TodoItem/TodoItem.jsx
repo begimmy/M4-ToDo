@@ -1,14 +1,16 @@
 import CorrectItem from "./CorrectItem";
 
-const TodoItem = ({item, setKey}) => {
+const TodoItem = ({item, setKey, data, setData, status}) => {
   return (
     <div className="todo-item">
       {
         item.correct
-        ? <CorrectItem item={item} setKey={setKey} />
+        ? <CorrectItem item={item} setKey={setKey} data={data} setData={setData} />
         : <>
 <div className="todo-item-left">
-        <button className="todo-item-complete-btn" onClick={()=>{
+        <button 
+        disabled = {status==='deleted'} 
+        className="todo-item-complete-btn" onClick={()=>{
           setKey('completed', item.id)
         }}>
           {
@@ -23,15 +25,41 @@ const TodoItem = ({item, setKey}) => {
       </div>
 
       <div className="todo-item-right">
-        <button className="todo-item-right-btn" onClick={()=>{
+        {
+          status==='deleted'
+          ? ''
+          : <>
+          
+          <button className="todo-item-right-btn" onClick={()=>{
           setKey('correct', item.id)
-        }}>correct</button>
-        <button className="todo-item-right-btn" onClick={()=>{
+          }}>correct</button>
+
+          <button className="todo-item-right-btn" onClick={()=>{
           setKey('important', item.id)
-        }}>important</button>
+          }}>important</button>
+          </>
+        }
+        
         <button className="todo-item-right-btn" onClick={()=>{
           setKey('deleted', item.id)
-        }}>delete</button>
+        }}>
+          {
+            status==='deleted'
+            ? 'restore'
+            : 'delete'
+          }</button>
+
+
+{
+  status==='deleted'
+  ? <button oncnClick={()=>{
+    setData(data.filter(element=>{
+      return element.id !== item.id
+    }))
+  }}>delete</button>
+  :''
+}
+
       </div>
         </>
       }

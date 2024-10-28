@@ -19,7 +19,10 @@ function App() {
           [key]: !item[key],
         }
       } else{
-        return item
+        return {
+        ...item,
+        correct:false,
+        }
       }
     }))
   }
@@ -51,10 +54,10 @@ function App() {
   return (
     <div className="wrapper">
 
-      <Form data={data} setData={setData} />
+      <Form data={data} setData={setData} setStatus={setStatus}/>
 
       <div className="wrapper-bottom">
-      <TodoList setKey={setKey} todoList={todoList} />
+      <TodoList setKey={setKey} todoList={todoList} data={data} setData={setData} setStatus={setStatus}/>
       <Footer status={status} setStatus={setStatus} />
       </div>
 
